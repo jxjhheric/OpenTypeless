@@ -5,13 +5,22 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8836:8000"
+      - "127.0.0.1:8836:8000"
     environment:
       TZ: ${TZ:-Asia/Shanghai}
       DOUBAO_ASR_HOST: 0.0.0.0
       DOUBAO_ASR_PORT: 8000
+      # 默认后端: ime / official（从 .env 读取）
+      DOUBAO_ASR_DEFAULT_BACKEND: ${DOUBAO_ASR_DEFAULT_BACKEND:-official}
       DOUBAO_ASR_CREDENTIAL_PATH: /app/credentials.json
-      # DOUBAO_ASR_API_KEY: sk-your-key
+      DOUBAO_ASR_API_KEY: ${DOUBAO_ASR_API_KEY}
+      DOUBAO_ASR_OFFICIAL_APP_KEY: ${DOUBAO_ASR_OFFICIAL_APP_KEY}
+      DOUBAO_ASR_OFFICIAL_ACCESS_KEY: ${DOUBAO_ASR_OFFICIAL_ACCESS_KEY}
+      DOUBAO_ASR_OFFICIAL_MODE: ${DOUBAO_ASR_OFFICIAL_MODE:-flash}
+      DOUBAO_ASR_OFFICIAL_STANDARD_RESOURCE_ID: ${DOUBAO_ASR_OFFICIAL_STANDARD_RESOURCE_ID:-volc.seedasr.auc}
+      DOUBAO_ASR_OFFICIAL_FLASH_RESOURCE_ID: ${DOUBAO_ASR_OFFICIAL_FLASH_RESOURCE_ID:-volc.bigasr.auc_turbo}
+      DOUBAO_ASR_OFFICIAL_MODEL_NAME: ${DOUBAO_ASR_OFFICIAL_MODEL_NAME:-bigmodel}
+      DOUBAO_ASR_OFFICIAL_UID: ${DOUBAO_ASR_OFFICIAL_UID:-opentypeless}
     volumes:
       - ./credentials.json:/app/credentials.json:ro
     restart: unless-stopped
