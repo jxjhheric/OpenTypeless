@@ -2,7 +2,8 @@ name: Build and Push Docker Image
 
 on:
   workflow_dispatch:
-
+env:
+  IMAGE_NAME_LOWER: ${{ github.repository }}" | tr '[:upper:]' '[:lower:]'
 permissions:
   contents: read
   packages: write
@@ -25,7 +26,7 @@ jobs:
       - name: Extract branch name
         id: branch
         run: echo "name=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
-
+        
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -33,6 +34,6 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository | lower }}:${{ steps.branch.outputs.name }}
-            ghcr.io/${{ github.repository | lower}}:${{ github.sha }}
+            ghcr.io/${{ env.IMAGE_NAME_LOWER }}:${{ steps.branch.outputs.name }}
+            ghcr.io/${{ env.IMAGE_NAME_LOWER}}:${{ github.sha }}
             ${{ github.ref == 'refs/heads/main' && format('ghcr.io/{0}:latest', github.repository) || '' }}
