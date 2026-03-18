@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libopus0 curl git g++ \
     && rm -rf /var/lib/apt/lists/*
-RUN uv pip install cryptography
+RUN uv pip install cryptography --system
 WORKDIR /app
 COPY doubao_asr_api.py ./
 
