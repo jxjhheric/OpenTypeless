@@ -11,9 +11,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-RUN uv pip install --system cryptography requests doubaoime_asr
 COPY doubao_asr_api.py ./
 
 EXPOSE 8000
 
-CMD ["python", "doubao_asr_api.py"]
+CMD ["uv", "run", "--with", "cryptography", "doubao_asr_api.py"] 
