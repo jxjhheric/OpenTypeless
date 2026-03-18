@@ -2,8 +2,7 @@ name: Build and Push Docker Image
 
 on:
   workflow_dispatch:
-env:
-  IMAGE_NAME_LOWER: ${{ github.repository }}" | tr '[:upper:]' '[:lower:]'
+
 permissions:
   contents: read
   packages: write
@@ -34,6 +33,6 @@ jobs:
           file: Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ env.IMAGE_NAME_LOWER }}:${{ steps.branch.outputs.name }}
-            ghcr.io/${{ env.IMAGE_NAME_LOWER}}:${{ github.sha }}
+            ghcr.io/opentypeless:${{ steps.branch.outputs.name }}
+            ghcr.io/opentypeless:${{ github.sha }}
             ${{ github.ref == 'refs/heads/main' && format('ghcr.io/{0}:latest', github.repository) || '' }}
