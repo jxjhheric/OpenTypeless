@@ -11,8 +11,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY pyproject.toml uv.lock* ./
-RUN uv sync --system --no-dev
+RUN uv pip install --system cryptography requests
 COPY doubao_asr_api.py ./
 
 EXPOSE 8000
