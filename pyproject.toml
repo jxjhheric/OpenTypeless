@@ -1,0 +1,7 @@
+[project]
+name = "my-asr-app"
+version = "0.1.0"
+dependencies = [
+    "cryptography",
+    # 在这里添加你的其他依赖
+]
