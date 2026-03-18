@@ -2,9 +2,7 @@ name: Build and Push Docker Image
 on:
   # 允许手动触发
   workflow_dispatch:
-env:
-  # 替换为你的镜像名称，例如：my-app
-  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,6 +10,8 @@ jobs:
       contents: read
       packages: write # 必须具有写入 GHCR 的权限
     steps:
+      - name: Set IMAGE_NAME to lowercase
+        run: echo "IMAGE_NAME=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Docker Buildx
